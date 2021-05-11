@@ -73,7 +73,25 @@ class Graph {
   }
 
   // this function returns an array of Node values using BFS
-  breadthFirstSearch(start) {}
+  breadthFirstSearch(start) {
+    const toVisitQueue = [start];
+    let visited = newSet();
+    visited.add(start);
+    let current;
+    while (toVisitQueue.length) {
+      current = toVisitQueue.shift();
+      // Look at all neighbors of current.
+      // If we have not visited the neighbor, add it to the toVisitQueue and the visited set.
+      current.adjacent.forEach(neighbor => {
+        if (!visited.has(neighbor)) {
+          toVisitQueue.push(neighbor);
+          visited.add(neighbor);
+        }
+      })
+    }
+    const seen = [...visited].map(node => node.value);
+    return seen;
+  }
 }
 
 /** addVertex / addVertices */
@@ -118,7 +136,47 @@ class Graph {
 // console.log(graph.nodes.has(c)); // false
 // console.log(graph.nodes.has(d)); // false
 
-/** depthFirstSearch */
+// /** depthFirstSearch */
+// let graph = new Graph()
+// let S = new Node('S');
+// let P = new Node('P');
+// let U = new Node('U');
+// let X = new Node('X');
+// let Q = new Node('Q');
+// let Y = new Node('Y');
+// let V = new Node('V');
+// let R = new Node('R');
+// let W = new Node('W');
+// let T = new Node('T');
+
+// graph.addVertices([S,P,U,X,Q,Y,V,R,W,T])
+
+// graph.addEdge(S, P);
+// graph.addEdge(S, U);
+
+// graph.addEdge(P, X);
+// graph.addEdge(U, X);
+
+// graph.addEdge(P, Q);
+// graph.addEdge(U, V);
+
+// graph.addEdge(X, Q);
+// graph.addEdge(X, Y);
+// graph.addEdge(X, V);
+
+// graph.addEdge(Q, R);
+// graph.addEdge(Y, R);
+
+// graph.addEdge(Y, W);
+// graph.addEdge(V, W);
+
+// graph.addEdge(R, T);
+// graph.addEdge(W, T);
+
+// // this is one option:
+// console.log(graph.depthFirstSearch(S)); // ["S", "P", "U", "X", "Q", "V", "Y", "R", "W", "T"]
+
+/** breadthFirstSearch */
 let graph = new Graph()
 let S = new Node('S');
 let P = new Node('P');
@@ -156,7 +214,6 @@ graph.addEdge(R, T);
 graph.addEdge(W, T);
 
 // this is one option:
-console.log(graph.depthFirstSearch(S)); // ["S", "P", "U", "X", "Q", "V", "Y", "R", "W", "T"]
+console.log(graph.depthFirstSearch(S)); // ["S", "U", "V", "W", "T", "R", "Q", "Y", "X", "P"]
 
-/** breadthFirstSearch */
 module.exports = {Graph, Node}
