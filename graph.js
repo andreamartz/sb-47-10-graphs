@@ -29,7 +29,10 @@ class Graph {
   }
 
   // this function accepts two vertices and updates their adjacent values to remove the other vertex
-  removeEdge(v1, v2) {}
+  removeEdge(v1, v2) {
+    v1.adjacent.delete(v2);
+    v2.adjacent.delete(v1);
+  }
 
   // this function accepts a vertex and removes it from the nodes property, it also updates any adjacency lists that include that vertex
   removeVertex(vertex) {}
@@ -60,9 +63,18 @@ console.log(graph.addEdge(a, c));
 console.log(graph.addEdge(b, d));
 console.log(graph.addEdge(c, d));
 
-console.log("A.ADJACENT: ", a.adjacent); // contains b and c
-console.log("B.ADJACENT: ", b.adjacent); // contains a and d
-console.log("C.ADJACENT: ", c.adjacent); // contains a and d
-console.log("D.ADJACENT: ", d.adjacent); // contains b and c
+// console.log("A.ADJACENT: ", a.adjacent); // contains b and c
+// console.log("B.ADJACENT: ", b.adjacent); // contains a and d
+// console.log("C.ADJACENT: ", c.adjacent); // contains a and d
+// console.log("D.ADJACENT: ", d.adjacent); // contains b and c
+
+/** removeEdge */
+graph.removeEdge(b,a)
+graph.removeEdge(c,d)
+
+console.log("A.ADJACENT: ", a.adjacent); // does not contain b
+console.log("B.ADJACENT: ", b.adjacent); // does not contain a
+console.log("C.ADJACENT: ", c.adjacent); // does not contain d
+console.log("D.ADJACENT: ", d.adjacent); // does not contain c
 
 module.exports = {Graph, Node}
