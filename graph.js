@@ -23,7 +23,10 @@ class Graph {
   }
 
   // this function accepts two vertices and updates their adjacent values to include the other vertex
-  addEdge(v1, v2) {}
+  addEdge(v1, v2) {
+    v1.adjacent.add(v2);
+    v2.adjacent.add(v1);
+  }
 
   // this function accepts two vertices and updates their adjacent values to remove the other vertex
   removeEdge(v1, v2) {}
@@ -43,10 +46,23 @@ let graph = new Graph();
 let a = new Node("A");
 let b = new Node("B");
 let c = new Node("C");
-console.log(graph.addVertices([a,b]));
-console.log(graph.addVertex(c));
-console.log(graph.nodes.has(a)); // true
-console.log(graph.nodes.has(b)); // true
-console.log(graph.nodes.has(c)); // true
+// console.log(graph.addVertices([a,b]));
+// console.log(graph.addVertex(c));
+// console.log(graph.nodes.has(a)); // true
+// console.log(graph.nodes.has(b)); // true
+// console.log(graph.nodes.has(c)); // true
+
+/** addEdge */
+let d = new Node("D");
+graph.addVertices([a, b, c, d]);
+console.log(graph.addEdge(a, b));
+console.log(graph.addEdge(a, c));
+console.log(graph.addEdge(b, d));
+console.log(graph.addEdge(c, d));
+
+console.log("A.ADJACENT: ", a.adjacent); // contains b and c
+console.log("B.ADJACENT: ", b.adjacent); // contains a and d
+console.log("C.ADJACENT: ", c.adjacent); // contains a and d
+console.log("D.ADJACENT: ", d.adjacent); // contains b and c
 
 module.exports = {Graph, Node}
