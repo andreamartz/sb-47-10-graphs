@@ -35,7 +35,14 @@ class Graph {
   }
 
   // this function accepts a vertex and removes it from the nodes property, it also updates any adjacency lists that include that vertex
-  removeVertex(vertex) {}
+  removeVertex(vertex) {
+    // remove links to the vertex's adjacencies
+    for (let link of vertex.adjacent) {
+      vertex.adjacent.delete(link);
+    }
+    // remove the vertex
+    this.nodes.delete(vertex);
+  }
 
   // this function returns an array of Node values using DFS
   depthFirstSearch(start) {}
@@ -69,12 +76,20 @@ console.log(graph.addEdge(c, d));
 // console.log("D.ADJACENT: ", d.adjacent); // contains b and c
 
 /** removeEdge */
-graph.removeEdge(b,a)
-graph.removeEdge(c,d)
+// graph.removeEdge(b,a);
+// graph.removeEdge(c,d);
 
 console.log("A.ADJACENT: ", a.adjacent); // does not contain b
 console.log("B.ADJACENT: ", b.adjacent); // does not contain a
 console.log("C.ADJACENT: ", c.adjacent); // does not contain d
 console.log("D.ADJACENT: ", d.adjacent); // does not contain c
 
+/** removeVertex */
+graph.removeVertex(c);
+graph.removeVertex(d);
+
+console.log(graph.nodes.has(a)); // true
+console.log(graph.nodes.has(b)); // true
+console.log(graph.nodes.has(c)); // false
+console.log(graph.nodes.has(d)); // false
 module.exports = {Graph, Node}
