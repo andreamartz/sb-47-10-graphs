@@ -4,7 +4,6 @@ class Node {
     this.adjacent = adjacent;
   }
 }
-
 class Graph {
   constructor() {
     this.nodes = new Set();
@@ -44,18 +43,44 @@ class Graph {
     this.nodes.delete(vertex);
   }
 
-  // this function returns an array of Node values using DFS
-  depthFirstSearch(start) {}
+  // this function returns an array of Node values visited using DFS
+  depthFirstSearch(start) {
+    // create a 'stack' of nodes to visit (toVisitStack)
+    const toVisitStack = [start];
+    // create a set of visited nodes (visited)
+    let visited = new Set();
+    visited.add(start);
+
+    let current;
+    // while the stack has nodes in it
+    while (toVisitStack.length) {
+      // pop off a node to visit (call this current)
+      current = toVisitStack.pop();
+        // for each neighbor of current, determine whether we still need to visit it
+      for (let neighbor of current.adjacent) {
+        // check if the neighbor is in visited set
+        if (!visited.has(neighbor)) {
+          // push the neighbor onto both the toVisitStack and the visited set
+          toVisitStack.push(neighbor);
+          visited.add(neighbor);
+        }
+      }
+    }
+    // turn visited back into an array and return it
+    visited = [...visited].map(node => node.value);
+    
+    return visited;
+  }
 
   // this function returns an array of Node values using BFS
   breadthFirstSearch(start) {}
 }
 
 /** addVertex / addVertices */
-let graph = new Graph();
-let a = new Node("A");
-let b = new Node("B");
-let c = new Node("C");
+// let graph = new Graph();
+// let a = new Node("A");
+// let b = new Node("B");
+// let c = new Node("C");
 // console.log(graph.addVertices([a,b]));
 // console.log(graph.addVertex(c));
 // console.log(graph.nodes.has(a)); // true
@@ -63,12 +88,12 @@ let c = new Node("C");
 // console.log(graph.nodes.has(c)); // true
 
 /** addEdge */
-let d = new Node("D");
-graph.addVertices([a, b, c, d]);
-console.log(graph.addEdge(a, b));
-console.log(graph.addEdge(a, c));
-console.log(graph.addEdge(b, d));
-console.log(graph.addEdge(c, d));
+// let d = new Node("D");
+// graph.addVertices([a, b, c, d]);
+// console.log(graph.addEdge(a, b));
+// console.log(graph.addEdge(a, c));
+// console.log(graph.addEdge(b, d));
+// console.log(graph.addEdge(c, d));
 
 // console.log("A.ADJACENT: ", a.adjacent); // contains b and c
 // console.log("B.ADJACENT: ", b.adjacent); // contains a and d
@@ -79,17 +104,59 @@ console.log(graph.addEdge(c, d));
 // graph.removeEdge(b,a);
 // graph.removeEdge(c,d);
 
-console.log("A.ADJACENT: ", a.adjacent); // does not contain b
-console.log("B.ADJACENT: ", b.adjacent); // does not contain a
-console.log("C.ADJACENT: ", c.adjacent); // does not contain d
-console.log("D.ADJACENT: ", d.adjacent); // does not contain c
+// console.log("A.ADJACENT: ", a.adjacent); // does not contain b
+// console.log("B.ADJACENT: ", b.adjacent); // does not contain a
+// console.log("C.ADJACENT: ", c.adjacent); // does not contain d
+// console.log("D.ADJACENT: ", d.adjacent); // does not contain c
 
 /** removeVertex */
-graph.removeVertex(c);
-graph.removeVertex(d);
+// graph.removeVertex(c);
+// graph.removeVertex(d);
 
-console.log(graph.nodes.has(a)); // true
-console.log(graph.nodes.has(b)); // true
-console.log(graph.nodes.has(c)); // false
-console.log(graph.nodes.has(d)); // false
+// console.log(graph.nodes.has(a)); // true
+// console.log(graph.nodes.has(b)); // true
+// console.log(graph.nodes.has(c)); // false
+// console.log(graph.nodes.has(d)); // false
+
+/** depthFirstSearch */
+let graph = new Graph()
+let S = new Node('S');
+let P = new Node('P');
+let U = new Node('U');
+let X = new Node('X');
+let Q = new Node('Q');
+let Y = new Node('Y');
+let V = new Node('V');
+let R = new Node('R');
+let W = new Node('W');
+let T = new Node('T');
+
+graph.addVertices([S,P,U,X,Q,Y,V,R,W,T])
+
+graph.addEdge(S, P);
+graph.addEdge(S, U);
+
+graph.addEdge(P, X);
+graph.addEdge(U, X);
+
+graph.addEdge(P, Q);
+graph.addEdge(U, V);
+
+graph.addEdge(X, Q);
+graph.addEdge(X, Y);
+graph.addEdge(X, V);
+
+graph.addEdge(Q, R);
+graph.addEdge(Y, R);
+
+graph.addEdge(Y, W);
+graph.addEdge(V, W);
+
+graph.addEdge(R, T);
+graph.addEdge(W, T);
+
+// this is one option:
+console.log(graph.depthFirstSearch(S)); // ["S", "P", "U", "X", "Q", "V", "Y", "R", "W", "T"]
+
+/** breadthFirstSearch */
 module.exports = {Graph, Node}
