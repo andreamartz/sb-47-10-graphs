@@ -11,10 +11,16 @@ class Graph {
   }
 
   // this function accepts a Node instance and adds it to the nodes property on the graph
-  addVertex(vertex) {}
+  addVertex(vertex) {
+    this.nodes.add(vertex);
+  }
 
   // this function accepts an array of Node instances and adds them to the nodes property on the graph
-  addVertices(vertexArray) {}
+  addVertices(vertexArray) {
+    for (let vertex of vertexArray) {
+      this.nodes.add(vertex);
+    }
+  }
 
   // this function accepts two vertices and updates their adjacent values to include the other vertex
   addEdge(v1, v2) {}
@@ -31,5 +37,16 @@ class Graph {
   // this function returns an array of Node values using BFS
   breadthFirstSearch(start) {}
 }
+
+/** addVertex / addVertices */
+let graph = new Graph();
+let a = new Node("A");
+let b = new Node("B");
+let c = new Node("C");
+console.log(graph.addVertices([a,b]));
+console.log(graph.addVertex(c));
+console.log(graph.nodes.has(a)); // true
+console.log(graph.nodes.has(b)); // true
+console.log(graph.nodes.has(c)); // true
 
 module.exports = {Graph, Node}
